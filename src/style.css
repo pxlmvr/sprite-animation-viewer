@@ -100,3 +100,16 @@ canvas {
   height: 600px;
   border: 5px solid #fff;
 }
+
+label {
+  display: block;
+  margin-top: 1.5rem;
+}
+
+select {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 1rem;
+}

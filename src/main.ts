@@ -5,6 +5,7 @@ import { AnimationType, animations } from './animation'
 
 const canvas: HTMLCanvasElement = document.querySelector('#output')!
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!
+const userSelect: HTMLSelectElement = document.querySelector('#animations')!
 
 /** Track the current animation frame */
 let frameCount: number = 0
@@ -15,7 +16,12 @@ const staggerFrames = 5
 const sprite: HTMLImageElement = new Image()
 sprite.src = '/assets/shadow_dog.png'
 
-const playerState: AnimationType = 'idle'
+let playerState: AnimationType = 'idle'
+
+userSelect.addEventListener('change', (e: Event) => {
+  const select = e.target as HTMLSelectElement
+  playerState = select.value as AnimationType
+})
 
 const animate: VoidFunction = () => {
   refreshCanvas(ctx)
