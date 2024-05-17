@@ -1,23 +1,47 @@
+import { SPRITE_HEIGHT, SPRITE_WIDTH } from './utils/constants'
 import { refreshCanvas } from './utils/refreshCanvas'
+
+import { AnimationType, animations } from './animation'
 
 const canvas: HTMLCanvasElement = document.querySelector('#output')!
 const ctx: CanvasRenderingContext2D = canvas.getContext('2d')!
 
 /** Track the current animation frame */
-let frameCounter: number = 0
+let frameCount: number = 0
 
 /** Basically how many frames each animation step should last for */
 const staggerFrames = 5
 
 const sprite: HTMLImageElement = new Image()
-sprite.src = '/assets/fox.png'
+sprite.src = '/assets/shadow_dog.png'
+
+const playerState: AnimationType = 'idle'
 
 const animate: VoidFunction = () => {
   refreshCanvas(ctx)
 
-  ctx.drawImage(sprite, 0, 0)
+  /**
+   * Cycle between sprites in the current row. Each sprite is shown for a number of animation loops
+   * equal to staggerFrames value.
+   */
+  let position =
+    Math.floor(frameCount / staggerFrames) % animations[playerState].loc.length
+  let frameX = SPRITE_WIDTH * position
+  let frameY = animations[playerState].loc[position].y
 
-  frameCounter++
+  ctx.drawImage(
+    sprite,
+    frameX,
+    frameY,
+    SPRITE_WIDTH,
+    SPRITE_HEIGHT,
+    0,
+    0,
+    SPRITE_WIDTH,
+    SPRITE_HEIGHT
+  )
+
+  frameCount++
 
   requestAnimationFrame(animate)
 }
